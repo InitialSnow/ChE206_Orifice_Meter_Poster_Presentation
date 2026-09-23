@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08141f">
+<meta name="description" content="Interactive ChE206 Fluid Mechanics Laboratory companion — Calibration of Orifice Meter.">
+<title>Calibration of Orifice Meter | ChE206</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="brand-mark">Ø</span><span>ChE206</span></a>
+  <nav class="desktop-nav">
+    <a href="#home">Home</a><a href="#experiment">Experiment</a><a href="#simulation">Simulation</a>
+    <a href="#poster">Poster</a><a href="#reports">Reports</a><a href="#references">References</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home">Home</a><a href="#experiment">Experiment</a><a href="#simulation">Simulation</a>
+  <a href="#poster">Poster</a><a href="#reports">Reports</a><a href="#references">References</a>
+</div>
+
+<main>
+<section class="hero section" id="home">
+  <div class="hero-copy">
+    <p class="eyebrow">FLUID MECHANICS LABORATORY · ChE 206</p>
+    <h1>Calibration of<br><span>Orifice Meter</span></h1>
+    <p class="hero-sub">An interactive digital companion to the poster presentation — explore the physics, vary the operating conditions, and inspect the experimental results.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#simulation">Explore Simulation <span>→</span></a>
+      <a class="btn ghost" href="#poster">View Poster</a>
+    </div>
+    <div class="hero-meta"><span>Department of Chemical Engineering</span><span>BUET · Dhaka</span></div>
+  </div>
+  <div class="hero-visual">
+    <svg id="heroPipe" viewBox="0 0 620 290" role="img" aria-label="Stylized orifice meter">
+      <defs><linearGradient id="fluidG" x1="0" x2="1"><stop offset="0" stop-color="#4cc9f0"/><stop offset="1" stop-color="#7ef6d5"/></linearGradient></defs>
+      <rect x="34" y="91" width="552" height="108" rx="18" class="pipe-shell"/>
+      <path d="M34 106 H276 L302 120 L318 170 L344 184 H586" class="pipe-inner"/>
+      <path d="M34 184 H276 L302 170 L318 120 L344 106 H586" class="pipe-inner"/>
+      <line x1="296" y1="80" x2="296" y2="211" class="plate"/>
+      <line x1="324" y1="80" x2="324" y2="211" class="plate"/>
+      <circle cx="310" cy="145" r="31" class="orifice-hole"/>
+      <path id="heroStream" d="M44 145 H272 C286 145 292 145 302 145 C330 145 344 145 360 145 H576" class="stream"/>
+      <text x="296" y="48" class="svg-label">ORIFICE PLATE</text>
+      <text x="358" y="226" class="svg-label">VENA CONTRACTA</text>
+      <circle cx="352" cy="145" r="5" class="vc-dot"/>
+      <g class="particles" id="heroParticles"></g>
+    </svg>
+  </div>
+</section>
+
+<section class="section" id="experiment">
+  <div class="section-head">
+    <div><p class="eyebrow">01 · THE EXPERIMENT</p><h2>Pressure becomes a measurement.</h2></div>
+    <p class="section-intro">The supplied report describes a sharp-edged concentric orifice meter calibrated by comparing experimental discharge with the differential pressure head across the restriction.</p>
+  </div>
+  <div class="info-grid">
+    <article class="info-card"><span class="num">01</span><h3>Restriction</h3><p>A concentric sharp-edged plate reduces the available flow area, increasing fluid velocity through the opening.</p></article>
+    <article class="info-card"><span class="num">02</span><h3>Pressure difference</h3><p>The pressure taps upstream and downstream of the orifice capture the differential head used for flow measurement.</p></article>
+    <article class="info-card"><span class="num">03</span><h3>Vena contracta</h3><p>The jet continues to contract after the physical opening until its cross-sectional area reaches a minimum.</p></article>
+    <article class="info-card"><span class="num">04</span><h3>Calibration</h3><p>The coefficient of orifice reconciles actual discharge with the ideal theoretical prediction.</p></article>
+  </div>
+  <div class="apparatus-strip">
+    <div><span>Fluid</span><strong>Water</strong></div>
+    <div><span>Manometer</span><strong>CCl₄</strong></div>
+    <div><span>Orifice</span><strong>1 in</strong></div>
+    <div><span>Pipe ID</span><strong>2.067 in</strong></div>
+    <div><span>β (report)</span><strong>0.489</strong></div>
+  </div>
+</section>
+
+<section class="section sim-section" id="simulation">
+  <div class="section-head">
+    <div><p class="eyebrow">02 · INTERACTIVE SIMULATION</p><h2>Change <em>Q</em> and β. Watch the flow respond.</h2></div>
+    <p class="section-intro">A simplified engineering visualization based on the experiment. The model is intended to demonstrate the relationships between geometry, velocity, pressure head and vena-contracta behavior—not to replace CFD.</p>
+  </div>
+  <div class="sim-layout">
+    <div class="sim-card">
+      <div class="sim-toolbar">
+        <span class="live-dot"></span><span>LIVE MODEL</span>
+        <button class="help-btn" id="helpBtn">How it works?</button>
+      </div>
+      <div class="sim-canvas-wrap">
+        <svg id="simSvg" viewBox="0 0 900 430" role="img" aria-label="Interactive orifice meter visualization">
+          <defs>
+            <linearGradient id="waterG" x1="0" x2="1"><stop offset="0" stop-color="#2e9fdb"/><stop offset="1" stop-color="#72f1d2"/></linearGradient>
+            <linearGradient id="headG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#79e8d0"/><stop offset="1" stop-color="#3389d8"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="40" y="125" width="820" height="170" rx="26" class="sim-pipe"/>
+          <path id="upperWall" class="sim-wall"/>
+          <path id="lowerWall" class="sim-wall"/>
+          <rect id="plate" x="418" y="92" width="20" height="236" rx="4" class="sim-plate"/>
+          <ellipse id="hole" cx="428" cy="210" rx="10" ry="45" class="sim-hole"/>
+          <path id="jet" class="jet"/>
+          <path id="jet2" class="jet faint"/>
+          <g id="streamlines"></g>
+          <g id="flowParticles"></g>
+          <line x1="280" y1="90" x2="280" y2="125" class="tap"/>
+          <line x1="560" y1="90" x2="560" y2="125" class="tap"/>
+          <line x1="280" y1="90" x2="280" y2="54" class="tap"/>
+          <line x1="560" y1="90" x2="560" y2="54" class="tap"/>
+          <text x="280" y="42" text-anchor="middle" class="tap-label">P₁</text>
+          <text x="560" y="42" text-anchor="middle" class="tap-label">P₂</text>
+          <text x="428" y="76" text-anchor="middle" class="plate-label">ORIFICE</text>
+          <line id="vcLeader" x1="520" y1="350" x2="520" y2="295" class="leader"/>
+          <text id="vcLabel" x="520" y="374" text-anchor="middle" class="vc-label">VENA CONTRACTA</text>
+          <text x="72" y="350" class="flow-label">FLOW →</text>
+          <g id="pressureBars"></g>
+        </svg>
+      </div>
+      <div class="vc-readout"><span>Vena-contracta position</span><strong id="vcPos">—</strong><span>from plate</span></div>
+    </div>
+
+    <aside class="controls">
+      <div class="control-block">
+        <div class="control-title"><span>Volumetric flow rate</span><output id="qOut">0.60 L/s</output></div>
+        <input id="qSlider" type="range" min="0.421" max="0.741" step="0.001" value="0.600">
+        <div class="range-labels"><span>0.421</span><span>0.741 L/s</span></div>
+      </div>
+      <div class="control-block">
+        <div class="control-title"><span>Diameter ratio β = d/D</span><output id="betaOut">0.489</output></div>
+        <input id="betaSlider" type="range" min="0.35" max="0.75" step="0.001" value="0.489">
+        <div class="range-labels"><span>0.35</span><span>0.75</span></div>
+      </div>
+      <div class="metrics">
+        <div><span>Pipe velocity</span><strong id="vOut">—</strong><small>m/s</small></div>
+        <div><span>ΔH (illustrative)</span><strong id="hOut">—</strong><small>m H₂O</small></div>
+        <div><span>Reynolds number</span><strong id="reOut">—</strong><small>—</small></div>
+        <div><span>C₀</span><strong id="cdOut">—</strong><small>dimensionless</small></div>
+      </div>
+      <div class="model-note"><b>Model note</b><br>Geometry and pressure trends respond to Q and β. C₀ uses the supplied experimental calibration values as a representative turbulent-flow range.</div>
+    </aside>
+  </div>
+  <div class="chart-card">
+    <div class="chart-head"><div><p class="eyebrow">PRESSURE PROFILE</p><h3>Relative pressure head along the meter</h3></div><span id="chartCaption">Q = 0.60 L/s · β = 0.489</span></div>
+    <svg id="chart" viewBox="0 0 900 300" aria-label="Dynamic pressure head chart">
+      <g id="grid"></g><path id="chartPath" class="chart-line"></path><circle id="chartPoint" r="5" class="chart-point"></circle>
+      <text x="450" y="292" text-anchor="middle" class="axis-label">Axial position →</text>
+      <text x="16" y="150" transform="rotate(-90 16 150)" text-anchor="middle" class="axis-label">Relative pressure head</text>
+    </svg>
+  </div>
+</section>
+
+<section class="section split-section" id="poster">
+  <div class="section-head">
+    <div><p class="eyebrow">03 · DIGITAL POSTER</p><h2>The physical poster, online.</h2></div>
+    <p class="section-intro">The supplied image is used here as the current poster preview. Replace the placeholder PDF with the final high-resolution poster before deployment.</p>
+  </div>
+  <div class="poster-layout">
+    <div class="poster-frame"><img src="assets/poster/poster-preview.jpg" alt="Current unfinished poster preview"></div>
+    <div class="resource-panel">
+      <span class="resource-tag">CURRENT PREVIEW</span>
+      <h3>Poster presentation</h3>
+      <p>Preview of the supplied unfinished poster. The layout can be retained while the final PDF is substituted.</p>
+      <a class="btn primary" href="assets/poster/poster-final-placeholder.pdf" download>Download Poster PDF</a>
+      <a class="text-link" href="assets/poster/poster-preview.jpg" target="_blank">Open preview image ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reports">
+  <div class="section-head">
+    <div><p class="eyebrow">04 · LAB REPORTS</p><h2>Reports from the laboratory.</h2></div>
+    <p class="section-intro">Participant 01 uses the supplied report. Participants 02–09 are placeholders ready to be replaced with final PDFs.</p>
+  </div>
+  <div class="report-grid" id="reportGrid"></div>
+</section>
+
+<section class="section" id="references">
+  <div class="section-head">
+    <div><p class="eyebrow">05 · REFERENCES</p><h2>Sources behind the work.</h2></div>
+    <p class="section-intro">References below are drawn from the supplied laboratory report. URLs can be added or corrected before publication.</p>
+  </div>
+  <div class="references-list" id="referencesList"></div>
+</section>
+
+<section class="footer-section">
+  <div>
+    <span class="brand-mark small">Ø</span>
+    <h2>Calibration of Orifice Meter</h2>
+    <p>ChE 206 · Chemical Engineering Laboratory I · BUET</p>
+  </div>
+  <a class="back-top" href="#home">Back to top ↑</a>
+</section>
+</main>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
